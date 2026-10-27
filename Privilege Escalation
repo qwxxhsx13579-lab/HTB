@@ -1,0 +1,6 @@
+Kubernetes 围绕 Pod 的概念展开，Pod 可以容纳一个或多个紧密连接的容器。每个 Pod 在节点上都像一个独立的虚拟机一样运行，拥有自己的 IP、主机名和其他详细信息。
+1. 集群基础设施安全:保护运行K8s集群的底层硬件和软件，比如物理服务器、虚拟机和宿主机操作系统,容器逃逸 (Container Escape)。如果攻击者在一个容器内发现了漏洞，并利用它“逃逸”到宿主机（Worker Node）上，那么他们就可以控制该节点上运行的所有其他容器.
+2.应用程序:在一个Pod中运行一个Web应用，而这个应用存在一个远程代码执行 (RCE) 漏洞。攻击者可以利用这个漏洞在容器内执行任意代码。Kubelet API获取到的容器镜像版本信息（例如 nginx:1.14.2）可以帮助攻击者寻找该版本已知的漏洞（CVEs）来进行攻击。
+3. 数据安全:不将敏感信息硬编码在配置文件中，K8s的 Secrets 对象来存储和管理这些敏感数据，并通过RBAC策略严格控制对这些Secrets的访问.
+提取令牌，证书（k）等：kubeletctl -i --server <IP_ADDRESS> +(k) ex:+exec "cat /root/root/.ssh/id_rsa" -p privesc -c privesc
+命令执行：kubeletctl -i --server <IP_ADDRESS> exec "<COMMAND>" -p <POD_NAME> -c <CONTAINER_NAME>
